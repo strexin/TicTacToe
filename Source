@@ -1,0 +1,120 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace TicTacpv
+{
+	/// <summary>
+	/// Description of MainForm.
+	/// </summary>
+	public partial class MainForm : Form
+	{
+		bool turn;
+		int count;
+		public MainForm()
+		{
+			
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+			
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
+		}
+		void ExitToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+		void AboutToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			MessageBox.Show("Tic Tac Toe\nCreated by : M. Ramadhan Rizki. D\nNIM : 181401114\nUSU - Ilmu Komputer");
+		}
+		void buttonClick(object sender, MouseEventArgs e)
+		{
+			Console.Beep();
+			Button cl = (Button) sender;
+			if (turn)
+				cl.Text = "Ñ";
+			else 
+				cl.Text = "¥";
+			turn =! turn;
+			cl.Enabled = false;
+			count++;
+			checkWin();
+		}
+		
+		private void checkWin()
+		{
+			bool Winner = false;
+			
+			//horizontal
+			if( (A1.Text == A2.Text)&& (A2.Text == A3.Text) && (!A1.Enabled))
+				Winner = true;
+			else if ((B1.Text == A2.Text) && (A2.Text == A3.Text) && (!B1.Enabled))
+					Winner = true;
+			else if ((C1.Text == C2.Text) && (C2.Text == C3.Text) && (!C1.Enabled))
+					Winner = true;
+			
+			//Diagonal
+			if ((A1.Text == B2.Text) && (B2.Text == C3.Text) && (!A1.Enabled))
+					Winner = true;
+			else if ((A3.Text == B2.Text) && (B2.Text == C1.Text) && (!A3.Enabled))
+					Winner = true;
+			
+			if(Winner)
+			{
+				canceledWin();
+				
+				String winner = "";
+				if(turn)
+					winner = "¥";
+				else
+					winner = "Ñ";
+				
+				MessageBox.Show("The winner is " + winner);
+			}
+			else
+				if (count == 9)
+					MessageBox.Show("Draw Game!!!");
+		}
+		
+		private void canceledWin()
+		{
+			try {
+				foreach(Control c in Controls) {
+					Button cl = (Button) c;
+					cl.Enabled = false;
+				}
+			}
+			catch{
+				
+			}
+		}
+		void NewGameToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			A1.Enabled = true;
+			A1.Text = "";
+			A2.Enabled = true;
+			A2.Text = "";
+			A3.Enabled = true;
+			A3.Text = "";
+			B1.Enabled = true;
+			B1.Text = "";
+			B2.Enabled = true;
+			B2.Text = "";
+			B3.Enabled = true;
+			B3.Text = "";
+			C1.Enabled = true;
+			C1.Text = "";
+			C2.Enabled = true;
+			C2.Text = "";
+			C3.Enabled = true;
+			C3.Text = "";
+			
+			count = 0;
+		}
+	}
+}
